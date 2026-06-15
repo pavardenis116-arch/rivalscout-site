@@ -1,8 +1,522 @@
 <!DOCTYPE html>
-<html>
-<head><title>RivalScout</title></head>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RivalScout — competitor intelligence on autopilot</title>
+<meta name="description" content="RivalScout watches your competitors' pricing, features, messaging, and hiring every day and tells you what it means for your product. $12/month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+
+/* THEME TOKENS */
+[data-theme="dark"]{
+  --bg:#0F1117;
+  --bg2:#1C1F2A;
+  --bg3:#252836;
+  --card:#1C1F2A;
+  --card2:#252836;
+  --line:#2E3240;
+  --ink:#F0F0F8;
+  --ink2:#A0A8C0;
+  --ink3:#606880;
+  --g:#4ADE80;
+  --g-bg:rgba(74,222,128,.12);
+  --r:#F87171;
+  --r-bg:rgba(248,113,113,.12);
+  --nav-bg:rgba(15,17,23,.92);
+  --hero-bg:#0F1117;
+  --section-alt:#13161E;
+  --toggle-bg:#2E3240;
+  --toggle-knob:#F0F0F8;
+  --shadow:0 2px 32px rgba(0,0,0,.4);
+}
+[data-theme="light"]{
+  --bg:#FAFAF8;
+  --bg2:#F4F3EF;
+  --bg3:#EEECEA;
+  --card:#FFFFFF;
+  --card2:#F7F6F2;
+  --line:#E4E3DC;
+  --ink:#141414;
+  --ink2:#505050;
+  --ink3:#909090;
+  --g:#16653F;
+  --g-bg:#EAF4EE;
+  --r:#B83232;
+  --r-bg:#FAEAEA;
+  --nav-bg:rgba(250,250,248,.92);
+  --hero-bg:#FAFAF8;
+  --section-alt:#F4F3EF;
+  --toggle-bg:#E4E3DC;
+  --toggle-knob:#141414;
+  --shadow:0 2px 32px rgba(0,0,0,.08);
+}
+
+body{background:var(--bg);color:var(--ink)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transition:background .3s}
+.logo{font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink);letter-spacing:-.02em;text-decoration:none}
+.logo em{font-style:italic;color:var(--g)}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-link{font-size:14px;color:var(--ink2);text-decoration:none;transition:color .2s}
+.nav-link:hover{color:var(--ink)}
+
+/* THEME TOGGLE */
+.theme-toggle{position:relative;width:48px;height:26px;cursor:pointer;flex-shrink:0}
+.theme-toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{display:block;width:48px;height:26px;background:var(--toggle-bg);border-radius:999px;transition:background .3s;position:relative}
+.toggle-knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--toggle-knob);transition:transform .3s,background .3s;display:flex;align-items:center;justify-content:center;font-size:11px}
+[data-theme="light"] .toggle-knob{transform:translateX(22px)}
+.toggle-icon-dark,.toggle-icon-light{position:absolute;top:7px;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.toggle-icon-dark{left:5px}
+.toggle-icon-light{right:5px}
+
+.nav-cta{font-size:14px;font-weight:500;background:var(--g);color:var(--bg);padding:9px 22px;border-radius:999px;text-decoration:none;transition:opacity .2s}
+[data-theme="light"] .nav-cta{color:#fff;background:#16653F}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{background:var(--hero-bg);min-height:100vh;display:flex;flex-direction:column;padding:0 32px;transition:background .3s}
+.hero-inner{max-width:1120px;width:100%;margin:0 auto;flex:1;display:grid;grid-template-columns:1fr 460px;gap:80px;align-items:center;padding:120px 0 80px}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:28px}
+.hero-kicker::before{content:'';width:5px;height:5px;background:var(--g);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(40px,5vw,64px);line-height:1.07;letter-spacing:-.025em;color:var(--ink);margin-bottom:24px;transition:color .3s}
+h1 em{font-style:italic;color:var(--g)}
+.hero-body{font-size:17px;color:var(--ink2);line-height:1.75;max-width:46ch;margin-bottom:36px}
+.hero-cta-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.cta-main{display:inline-flex;align-items:center;gap:10px;background:var(--g);color:var(--bg);font-size:15px;font-weight:500;padding:14px 28px;border-radius:999px;text-decoration:none;transition:opacity .2s}
+[data-theme="light"] .cta-main{background:#16653F;color:#fff}
+.cta-main:hover{opacity:.88}
+.cta-main svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.cta-note{font-size:13px;color:var(--ink3)}
+
+/* EMAIL CARD */
+.email-card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:background .3s,border-color .3s}
+.ec-bar{background:var(--card2);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;gap:7px;transition:background .3s}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#FF5F57}.dot-y{background:#FEBC2E}.dot-g{background:#28C840}
+.ec-addr{margin-left:8px;font-size:12px;color:var(--ink3);font-family:'SF Mono','Fira Code',monospace}
+.ec-head{padding:18px 22px;border-bottom:1px solid var(--line)}
+.ec-from{font-size:12px;color:var(--ink3);margin-bottom:4px}
+.ec-subj{font-size:15px;font-weight:500;color:var(--ink)}
+.ec-body{padding:20px 22px}
+.diff-line{display:flex;align-items:flex-start;gap:9px;padding:8px 12px;border-radius:8px;font-family:'SF Mono','Fira Code',monospace;font-size:13px;line-height:1.45;margin-bottom:6px;opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease,background .3s}
+.diff-line.visible{opacity:1;transform:none}
+.diff-rm{background:var(--r-bg);color:var(--r)}
+.diff-ad{background:var(--g-bg);color:var(--g)}
+.diff-sign{font-weight:700;min-width:14px;flex-shrink:0}
+.ec-insight{margin-top:14px;padding:12px 15px;background:var(--g-bg);border-left:3px solid var(--g);border-radius:0 8px 8px 0;font-size:13px;color:var(--ink2);line-height:1.55;opacity:0;transition:opacity .5s ease .8s,background .3s}
+.ec-insight.visible{opacity:1}
+.ec-insight strong{color:var(--g);font-weight:500}
+
+/* SCROLL HINT */
+.scroll-hint{text-align:center;padding:28px 0 40px;color:var(--ink3);font-size:13px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint svg{animation:bounce 2s infinite;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* SECTIONS */
+section{padding:96px 32px;border-top:1px solid var(--line);transition:background .3s}
+.wrap{max-width:1120px;margin:0 auto}
+.s-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:16px}
+h2{font-family:'Instrument Serif',serif;font-size:clamp(30px,3.8vw,46px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin-bottom:18px;transition:color .3s}
+h2 em{font-style:italic;color:var(--g)}
+.s-sub{font-size:17px;color:var(--ink2);max-width:52ch;line-height:1.7}
+
+/* RADAR */
+.radar-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.radar-cell{padding:28px 24px;border-right:1px solid var(--line);background:var(--card);transition:background .3s}
+.radar-cell:last-child{border-right:none}
+.rc-tag{font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:var(--g);background:var(--g-bg);padding:4px 9px;border-radius:5px;display:inline-block;margin-bottom:18px}
+.radar-cell h3{font-size:16px;font-weight:500;margin-bottom:8px;color:var(--ink)}
+.radar-cell p{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* INBOX */
+.inbox-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
+.inbox-item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;transition:background .3s}
+.ii-when{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px}
+.inbox-item h3{font-size:18px;font-weight:500;margin-bottom:10px;color:var(--ink)}
+.inbox-item p{font-size:14px;color:var(--ink2);line-height:1.65;flex:1}
+.ii-pill{margin-top:18px;display:inline-block;font-size:12px;padding:5px 12px;border-radius:999px}
+.pill-g{background:var(--g-bg);color:var(--g)}
+.pill-r{background:var(--r-bg);color:var(--r)}
+.pill-n{background:var(--bg3);color:var(--ink2)}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:56px;position:relative}
+.steps-grid::before{content:'';position:absolute;top:18px;left:calc(33.33% - 8px);right:calc(33.33% - 8px);height:1px;background:var(--line)}
+.step-n{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:20px;position:relative;z-index:1;transition:background .3s}
+.step h3{font-size:17px;font-weight:500;margin-bottom:8px;color:var(--ink)}
+.step p{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* COMPARE */
+.compare-table{margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead tr{background:var(--card2)}
+thead th{text-align:left;padding:14px 20px;font-weight:500;font-size:13px;color:var(--ink2);border-bottom:1px solid var(--line)}
+thead th:nth-child(2){color:var(--g)}
+tbody td{padding:15px 20px;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top;background:var(--card);transition:background .3s}
+tbody td:nth-child(2){background:var(--bg2);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+.y{color:var(--g)}.no{color:var(--ink3)}
+td small{display:block;color:var(--ink3);font-weight:400;font-size:12px;margin-top:2px}
+
+/* PRICING */
+.pricing-wrap{max-width:430px;margin:56px auto 0}
+.trial-badge{text-align:center;margin-bottom:14px}
+.trial-badge span{background:var(--g-bg);color:var(--g);font-size:12px;font-weight:500;padding:5px 14px;border-radius:999px}
+.price-card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:background .3s}
+.pc-top{background:var(--bg2);padding:36px;text-align:center;border-bottom:1px solid var(--line);transition:background .3s}
+.pc-top .pnum{font-family:'Instrument Serif',serif;font-size:72px;line-height:1;color:var(--ink);letter-spacing:-.03em;transition:color .3s}
+.pc-top .pper{font-size:16px;color:var(--ink2)}
+.pc-top .ptrial{margin-top:10px;font-size:13px;color:var(--g)}
+.pc-feats{padding:28px 32px}
+.pc-feats li{list-style:none;display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink)}
+.pc-feats li:last-child{border-bottom:none}
+.pc-feats li::before{content:'✓';color:var(--g);font-weight:600;flex-shrink:0;margin-top:1px}
+.pc-action{padding:0 32px 32px}
+.pc-btn{display:block;text-align:center;background:var(--g);color:var(--bg);font-size:15px;font-weight:500;padding:16px;border-radius:999px;text-decoration:none;transition:opacity .2s}
+[data-theme="light"] .pc-btn{background:#16653F;color:#fff}
+.pc-btn:hover{opacity:.88}
+.pc-fine{text-align:center;font-size:13px;color:var(--ink3);margin-top:12px}
+
+/* FAQ */
+.faq-wrap{max-width:680px;margin:56px auto 0}
+details{border-bottom:1px solid var(--line);padding:20px 0}
+details:first-child{border-top:1px solid var(--line)}
+summary{font-size:16px;font-weight:500;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-size:22px;font-weight:300;color:var(--ink3);line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-top:14px;font-size:15px;color:var(--ink2);line-height:1.75}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:36px 32px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink3);background:var(--bg);transition:background .3s}
+footer a{color:var(--ink2);text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:44px;padding-top:96px}
+  .radar-grid{grid-template-columns:repeat(2,1fr)}
+  .radar-cell:nth-child(2){border-right:none}
+  .radar-cell{border-bottom:1px solid var(--line)}
+  .radar-cell:nth-child(3),.radar-cell:nth-child(4){border-bottom:none}
+  .inbox-grid,.steps-grid{grid-template-columns:1fr}
+  .steps-grid::before{display:none}
+  footer{flex-direction:column;gap:10px;text-align:center}
+}
+@media(max-width:600px){
+  .nav,.hero,section{padding-left:20px;padding-right:20px}
+  .nav{padding-top:0;padding-bottom:0}
+  h1{font-size:36px}
+}
+</style>
+</head>
 <body>
-<h1>RivalScout</h1>
-<p>Competitor intelligence on autopilot for SaaS founders. Coming soon.</p>
+
+<nav class="nav">
+  <a class="logo" href="#">Rival<em>Scout</em></a>
+  <div class="nav-right">
+    <a class="nav-link" href="#radar">Radar</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+
+    <!-- THEME TOGGLE -->
+    <label class="theme-toggle" title="Toggle theme" aria-label="Toggle dark/light mode">
+      <input type="checkbox" id="themeToggle">
+      <span class="toggle-track">
+        <span class="toggle-knob"></span>
+        <span class="toggle-icon-dark" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <span class="toggle-icon-light" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+      </span>
+    </label>
+
+    <a class="nav-cta" href="https://buy.stripe.com/dRmdR8bk4esabQc5X8ebu00">Start free trial</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-kicker">Competitor intelligence · automated</div>
+      <h1>Your competitors changed pricing.<br><em>You found out today.</em></h1>
+      <p class="hero-body">RivalScout watches their pricing pages, feature updates, homepage messaging, and job listings every day — and emails you exactly what changed and what it means for your business.</p>
+      <div class="hero-cta-row">
+        <a class="cta-main" href="https://buy.stripe.com/dRmdR8bk4esabQc5X8ebu00">
+          Start 14-day free trial
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <span class="cta-note">$12/month · No card during trial</span>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="ec-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="ec-addr">alerts@tryrivalscout.com</span>
+      </div>
+      <div class="ec-head">
+        <div class="ec-from">Today · 09:00 AM</div>
+        <div class="ec-subj">RivalApp changed their pricing page</div>
+      </div>
+      <div class="ec-body">
+        <div class="diff-line diff-rm" id="d1"><span class="diff-sign">−</span>Pro plan: $29 / month</div>
+        <div class="diff-line diff-ad" id="d2"><span class="diff-sign">+</span>Pro plan: $39 / month (+34%)</div>
+        <div class="diff-line diff-ad" id="d3"><span class="diff-sign">+</span>New "Teams" tier added at $99/month</div>
+        <div class="diff-line diff-rm" id="d4"><span class="diff-sign">−</span>Free trial: 14 days → 7 days</div>
+        <div class="ec-insight" id="insight"><strong>What this means for you:</strong> RivalApp just moved upmarket. Their price-sensitive customers are your easiest win this week.</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to learn more</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</div>
+
+<!-- RADAR -->
+<section id="radar">
+  <div class="wrap">
+    <p class="s-label">The radar</p>
+    <h2>Four signals.<br><em>One inbox.</em></h2>
+    <p class="s-sub">Pricing pages are one window. Competitors announce their strategy on four pages most founders never re-read.</p>
+    <div class="radar-grid">
+      <div class="radar-cell">
+        <div class="rc-tag">/pricing</div>
+        <h3>Pricing</h3>
+        <p>Price moves, new tiers, changed limits, shrinking trials — with before and after numbers.</p>
+      </div>
+      <div class="radar-cell">
+        <div class="rc-tag">/changelog</div>
+        <h3>Features</h3>
+        <p>They shipped what your customers keep requesting? You'll know the next morning.</p>
+      </div>
+      <div class="radar-cell">
+        <div class="rc-tag">/home</div>
+        <h3>Messaging</h3>
+        <p>Repositioning, new audience, new claims — spotted the moment their homepage changes.</p>
+      </div>
+      <div class="radar-cell">
+        <div class="rc-tag">/careers</div>
+        <h3>Hiring</h3>
+        <p>Three sales hires in a new region is a strategy announcement. We read it that way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INBOX -->
+<section>
+  <div class="wrap">
+    <p class="s-label">What lands in your inbox</p>
+    <h2>Three emails.<br><em>Zero</em> dashboards.</h2>
+    <p class="s-sub">You describe your product once. Every report is written relative to your specific situation — not generic market news.</p>
+    <div class="inbox-grid">
+      <div class="inbox-item">
+        <div class="ii-when">Day one</div>
+        <h3>Baseline report</h3>
+        <p>Within 24 hours: every watched page analysed, each competitor compared to your product, with opportunities and threats named directly.</p>
+        <span class="ii-pill pill-n">your starting map</span>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-when">When it happens</div>
+        <h3>Change alert</h3>
+        <p>A price moves, a tier appears, a trial shrinks — you get old → new in plain English, plus what it means for you. Noise filtered out.</p>
+        <span class="ii-pill pill-r">− $29 → + $39</span>
+      </div>
+      <div class="inbox-item">
+        <div class="ii-when">Every Monday</div>
+        <h3>Market digest</h3>
+        <p>State of your market this week: who moved, who's stable, what to watch. Quiet weeks get a calm two-liner — never filler.</p>
+        <span class="ii-pill pill-g">monitoring active</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section>
+  <div class="wrap">
+    <p class="s-label">How it works</p>
+    <h2>Set up once.<br><em>Runs forever.</em></h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-n">1</div>
+        <h3>Describe your product</h3>
+        <p>After subscribing, fill a short form — three sentences about what you sell and up to five competitor page links. Any mix of pricing, features, homepage, or careers.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <h3>We read everything, daily</h3>
+        <p>Every morning we fetch each page — including JavaScript-heavy sites — and compare against yesterday's snapshot. Nothing slips through.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <h3>You read three emails</h3>
+        <p>The baseline report, alerts when something meaningful moves, and the Monday digest. Competitive awareness, fully outsourced.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section>
+  <div class="wrap">
+    <p class="s-label">Versus alternatives</p>
+    <h2>Why not just use<br>a page monitor?</h2>
+    <p class="s-sub">Generic monitors tell you something changed. RivalScout tells you what, why it matters, and does it every week whether or not anything happened.</p>
+    <div class="compare-table">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%"></th>
+            <th style="width:22%">RivalScout</th>
+            <th style="width:22%">Page monitors</th>
+            <th style="width:22%">Enterprise intel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tells you <em>what</em> changed</td>
+            <td><span class="y">Yes</span><small>old → new, plain English</small></td>
+            <td><span class="no">No</span><small>"the page changed"</small></td>
+            <td><span class="y">Yes</span><small>buried in dashboards</small></td>
+          </tr>
+          <tr>
+            <td>Personalised for your product</td>
+            <td><span class="y">Yes</span><small>"what this means for you"</small></td>
+            <td><span class="no">No</span></td>
+            <td><span class="no">Rarely</span></td>
+          </tr>
+          <tr>
+            <td>Watches beyond pricing</td>
+            <td><span class="y">Yes</span><small>features, messaging, hiring</small></td>
+            <td><span class="y">Any page</span><small>no understanding of it</small></td>
+            <td><span class="y">Yes</span></td>
+          </tr>
+          <tr>
+            <td>Weekly digest</td>
+            <td><span class="y">Yes</span></td>
+            <td><span class="no">No</span></td>
+            <td><span class="no">No</span></td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td><span class="y">$12/mo</span></td>
+            <td style="color:var(--ink2)">$8–40/mo</td>
+            <td style="color:var(--ink2)">$100–400+/mo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <p class="s-label" style="text-align:center">Pricing</p>
+    <h2 style="text-align:center">One plan.<br><em>One coffee</em> a week.</h2>
+    <div class="pricing-wrap">
+      <div class="trial-badge"><span>14-day free trial · no card required</span></div>
+      <div class="price-card">
+        <div class="pc-top">
+          <div class="pnum">$12</div>
+          <div class="pper">per month</div>
+          <div class="ptrial">Free for your first 14 days</div>
+        </div>
+        <ul class="pc-feats">
+          <li>5 competitor pages — pricing, features, messaging, hiring</li>
+          <li>Day-one competitive baseline report</li>
+          <li>Change alerts with "what this means for you"</li>
+          <li>Weekly Monday market digest</li>
+          <li>Noise filtering — no false alarms</li>
+          <li>Cancel anytime, no questions asked</li>
+        </ul>
+        <div class="pc-action">
+          <a class="pc-btn" href="https://buy.stripe.com/dRmdR8bk4esabQc5X8ebu00">Start 14-day free trial</a>
+          <p class="pc-fine">Your baseline report arrives within 24 hours of setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <p class="s-label" style="text-align:center">Questions</p>
+    <h2 style="text-align:center">FAQ</h2>
+    <div class="faq-wrap">
+      <details>
+        <summary>Which pages can you monitor?</summary>
+        <p>Any public page — pricing pages, changelogs, homepages, careers pages. Standard pages work immediately; JavaScript-heavy pages are read with a full browser engine. If a page genuinely can't be read, we tell you rather than pretending.</p>
+      </details>
+      <details>
+        <summary>How is it personalised to my product?</summary>
+        <p>At setup you describe your product in a few sentences. Every report and alert is then written relative to you — price gaps versus your plans, features you do or don't have, positioning overlaps. It's intelligence about your specific situation, not generic market news.</p>
+      </details>
+      <details>
+        <summary>How quickly will I find out about a change?</summary>
+        <p>Pages are checked every morning. A change made today reaches your inbox by tomorrow morning at the latest.</p>
+      </details>
+      <details>
+        <summary>What happens if nothing changes for weeks?</summary>
+        <p>You still get your day-one baseline report immediately, and the Monday digest every week. Quiet weeks get a calm two-liner confirming monitoring is active. Change alerts come whenever your market actually moves.</p>
+      </details>
+      <details>
+        <summary>How do I cancel?</summary>
+        <p>One click from any email we send, or via your Stripe billing portal. No phone calls, no retention flows, no questions.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 RivalScout</span>
+  <span>competitor intelligence on autopilot</span>
+  <a href="mailto:hello@tryrivalscout.com">hello@tryrivalscout.com</a>
+</footer>
+
+<script>
+var html = document.documentElement;
+var toggle = document.getElementById('themeToggle');
+
+// Load saved preference, default to dark
+var saved = localStorage.getItem('rs-theme') || 'light';
+html.setAttribute('data-theme', saved);
+toggle.checked = saved === 'light';
+
+toggle.addEventListener('change', function() {
+  var theme = this.checked ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('rs-theme', theme);
+});
+
+// Animate email diff lines
+var lines = ['d1','d2','d3','d4'];
+var delays = [300,600,900,1200];
+lines.forEach(function(id, i) {
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) el.classList.add('visible');
+  }, delays[i]);
+});
+setTimeout(function() {
+  var el = document.getElementById('insight');
+  if (el) el.classList.add('visible');
+}, 1700);
+</script>
 </body>
 </html>
