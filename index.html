@@ -130,7 +130,7 @@ h2 em{font-style:italic;color:var(--g)}
 .s-sub{font-size:17px;color:var(--ink2);max-width:52ch;line-height:1.7}
 
 /* RADAR */
-.radar-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.radar-grid{display:grid;grid-template-columns:repeat(5,1fr);margin-top:56px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .radar-cell{padding:28px 24px;border-right:1px solid var(--line);background:var(--card);transition:background .3s}
 .radar-cell:last-child{border-right:none}
 .rc-tag{font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:var(--g);background:var(--g-bg);padding:4px 9px;border-radius:5px;display:inline-block;margin-bottom:18px}
@@ -213,6 +213,9 @@ footer a:hover{color:var(--ink)}
   footer{flex-direction:column;gap:10px;text-align:center}
   .compare-table{font-size:13px}
   thead th,tbody td{padding:10px 12px}
+}
+@media(max-width:680px){
+  .pricing-grid{grid-template-columns:1fr !important}
 }
 @media(max-width:600px){
   /* Nav */
@@ -378,10 +381,15 @@ footer a:hover{color:var(--ink)}
         <h3>Messaging</h3>
         <p>Repositioning, new audience, new claims — spotted the moment their homepage changes.</p>
       </div>
-      <div class="radar-cell">
+      <div class="radar-cell" style="border-right:1px solid var(--line)">
         <div class="rc-tag">/careers</div>
         <h3>Hiring</h3>
         <p>Three sales hires in a new region is a strategy announcement. We read it that way.</p>
+      </div>
+      <div class="radar-cell" style="border-right:none">
+        <div class="rc-tag">G2 / Capterra</div>
+        <h3>Reviews</h3>
+        <p>New complaints, recurring pain points, star rating shifts — what their customers hate is your opening.</p>
       </div>
     </div>
   </div>
@@ -499,28 +507,50 @@ footer a:hover{color:var(--ink)}
   <div class="wrap">
     <p class="s-label" style="text-align:center">Pricing</p>
     <h2 style="text-align:center">One plan.<br><em>One coffee</em> a week.</h2>
-    <div class="pricing-wrap">
-      <div class="trial-badge"><span>14-day free trial · no card required</span></div>
-      <div class="price-card">
-        <div class="pc-top">
-          <div class="pnum">$12</div>
-          <div class="pper">per month</div>
-          <div class="ptrial">Free for your first 14 days</div>
+    <div class="trial-badge" style="text-align:center;margin-bottom:16px"><span>14-day free trial · no card required on either plan</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:760px;margin:0 auto;">
+
+      <!-- STARTER -->
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);">
+        <div style="background:var(--bg2);padding:28px;text-align:center;border-bottom:1px solid var(--line);">
+          <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;">Starter</p>
+          <div style="font-family:'Instrument Serif',serif;font-size:54px;line-height:1;color:var(--ink);letter-spacing:-.03em;">$12<span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:400;color:var(--ink2);"> / mo</span></div>
+          <p style="font-size:13px;color:var(--g);margin-top:8px;">Free for first 14 days</p>
         </div>
-        <ul class="pc-feats">
-          <li>5 competitor pages — pricing, features, messaging, hiring</li>
-          <li>Day-one competitive baseline report</li>
-          <li>Change alerts with "what this means for you"</li>
-          <li>Weekly Monday market digest</li>
-          <li>Noise filtering — no false alarms</li>
-          <li>Cancel anytime, no questions asked</li>
+        <ul style="padding:22px 26px;list-style:none;">
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>5 competitor pages</li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Pricing, features, messaging, hiring</li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Day-one baseline report</li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Change alerts + Monday digest</li>
+          <li style="padding:8px 0;font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Email delivery</li>
         </ul>
-        <div class="pc-action">
-          <a class="pc-btn" href="https://buy.stripe.com/dRmdR8bk4esabQc5X8ebu00">Start 14-day free trial</a>
-          <p class="pc-fine">Your baseline report arrives within 24 hours of setup.</p>
+        <div style="padding:0 26px 26px;">
+          <a href="https://buy.stripe.com/dRmdR8bk4esabQc5X8ebu00" style="display:block;text-align:center;background:var(--ink);color:#fff;font-size:14px;font-weight:500;padding:14px;border-radius:999px;text-decoration:none;">Start free trial</a>
         </div>
       </div>
+
+      <!-- PRO -->
+      <div style="background:var(--card);border:2px solid var(--g);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);position:relative;">
+        <div style="position:absolute;top:14px;right:14px;background:var(--g);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;">Popular</div>
+        <div style="background:#111;padding:28px;text-align:center;border-bottom:1px solid #2E3240;">
+          <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#4ADE80;margin-bottom:8px;">Pro</p>
+          <div style="font-family:'Instrument Serif',serif;font-size:54px;line-height:1;color:#fff;letter-spacing:-.03em;">$24<span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:400;color:#8890A8;"> / mo</span></div>
+          <p style="font-size:13px;color:#4ADE80;margin-top:8px;">Free for first 14 days</p>
+        </div>
+        <ul style="padding:22px 26px;list-style:none;">
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span><strong>10 competitor pages</strong></li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Pricing, features, messaging, hiring + <strong>reviews</strong></li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span>Everything in Starter</li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span><strong>Slack alerts</strong></li>
+          <li style="padding:8px 0;font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span><strong>Change history timeline</strong></li>
+        </ul>
+        <div style="padding:0 26px 26px;">
+          <a href="#PRO_STRIPE_LINK" style="display:block;text-align:center;background:var(--g);color:#fff;font-size:14px;font-weight:500;padding:14px;border-radius:999px;text-decoration:none;">Start free trial</a>
+        </div>
+      </div>
+
     </div>
+    <p style="text-align:center;font-size:13px;color:var(--ink3);margin-top:16px;">Your baseline report arrives within 24 hours of setup on both plans.</p>
   </div>
 </section>
 
