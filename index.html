@@ -206,8 +206,9 @@ footer a:hover{color:var(--ink)}
   .hero-inner{grid-template-columns:1fr;gap:40px;padding-top:88px}
   .radar-grid{grid-template-columns:repeat(2,1fr)}
   .radar-cell:nth-child(2){border-right:none}
+  .radar-cell:nth-child(4){border-right:none}
   .radar-cell{border-bottom:1px solid var(--line)}
-  .radar-cell:nth-child(3),.radar-cell:nth-child(4){border-bottom:none}
+  .radar-cell:nth-child(4),.radar-cell:nth-child(5){border-bottom:none}
   .inbox-grid,.steps-grid{grid-template-columns:1fr}
   .steps-grid::before{display:none}
   footer{flex-direction:column;gap:10px;text-align:center}
@@ -215,80 +216,87 @@ footer a:hover{color:var(--ink)}
   thead th,tbody td{padding:10px 12px}
 }
 @media(max-width:680px){
-  .pricing-grid{grid-template-columns:1fr !important}
+  .pricing-two-col{grid-template-columns:1fr !important}
 }
 @media(max-width:600px){
-  /* Nav */
+  /* ── Nav ── */
   .nav{padding:0 16px;height:52px}
   .nav-link{display:none}
   .logo{font-size:19px}
-  .nav-cta{font-size:13px;padding:7px 16px}
+  .nav-cta{font-size:13px;padding:7px 14px}
   .theme-toggle{width:42px;height:24px}
   .toggle-track{width:42px;height:24px}
   .toggle-knob{width:18px;height:18px}
   [data-theme="light"] .toggle-knob{transform:translateX(18px)}
 
-  /* Hero */
+  /* ── Hero ── */
   .hero{padding:0 16px}
-  .hero-inner{padding-top:80px;gap:32px}
-  h1{font-size:32px;line-height:1.1}
-  .hero-body{font-size:15px}
-  .cta-main{font-size:14px;padding:13px 22px;width:100%;justify-content:center}
+  .hero-inner{padding-top:76px;gap:28px}
+  h1{font-size:30px;line-height:1.1}
+  .hero-body{font-size:15px;max-width:100%}
+  .cta-main{font-size:14px;padding:14px 22px;width:100%;justify-content:center;border-radius:14px}
   .cta-note{font-size:12px;width:100%;text-align:center}
-  .hero-cta-row{flex-direction:column;gap:10px}
-  .scroll-hint{padding:16px 0 28px}
+  .hero-cta-row{flex-direction:column;gap:10px;align-items:stretch}
+  .scroll-hint{padding:12px 0 24px;font-size:12px}
 
-  /* Email card */
+  /* ── Email card ── */
+  .email-card{border-radius:12px}
   .ec-addr{display:none}
-  .ec-head{padding:14px 16px}
-  .ec-body{padding:14px 16px}
-  .diff-line{font-size:12px;padding:6px 10px}
-  .ec-insight{font-size:12px}
+  .ec-bar{padding:10px 14px}
+  .ec-head{padding:12px 16px}
+  .ec-subj{font-size:14px}
+  .ec-body{padding:12px 16px 16px}
+  .diff-line{font-size:12px;padding:6px 9px;margin-bottom:4px}
+  .ec-insight{font-size:12px;padding:10px 12px}
 
-  /* Sections */
-  section{padding:64px 16px}
-  h2{font-size:26px}
-  .s-sub{font-size:15px}
+  /* ── Sections ── */
+  section{padding:56px 16px}
+  h2{font-size:24px}
+  .s-label{font-size:10px}
+  .s-sub{font-size:14px;max-width:100%}
 
-  /* Radar — single column on phone */
-  .radar-grid{grid-template-columns:1fr}
-  .radar-cell{border-right:none;border-bottom:1px solid var(--line);padding:22px 18px}
+  /* ── Radar ── */
+  .radar-grid{grid-template-columns:1fr;border-radius:12px}
+  .radar-cell{border-right:none !important;border-bottom:1px solid var(--line);padding:18px 16px}
   .radar-cell:last-child{border-bottom:none}
+  .rc-tag{font-size:10px;padding:3px 8px}
 
-  /* Inbox cards */
-  .inbox-grid{gap:14px}
-  .inbox-item{padding:22px 18px}
+  /* ── Inbox cards ── */
+  .inbox-grid{gap:12px}
+  .inbox-item{padding:18px 16px;border-radius:12px}
+  .inbox-item h3{font-size:16px}
+  .inbox-item p{font-size:13px}
+  .ii-pill{font-size:11px}
 
-  /* Steps */
-  .steps-grid{gap:32px}
-  .step p{font-size:14px}
+  /* ── Steps ── */
+  .steps-grid{gap:24px}
+  .step-n{width:30px;height:30px;font-size:12px}
+  .step h3{font-size:15px}
+  .step p{font-size:13px}
 
-  /* Compare table — hide on small phones, show scroll hint */
-  .compare-table{border-radius:10px}
-  table{font-size:12px}
-  thead th,tbody td{padding:10px 10px}
-  thead th:nth-child(3),thead th:nth-child(4),
-  tbody td:nth-child(3),tbody td:nth-child(4){display:none}
+  /* ── Compare table ── */
+  .compare-table{border-radius:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{font-size:12px;min-width:340px}
+  thead th,tbody td{padding:9px 8px}
+  thead th:nth-child(4),tbody td:nth-child(4){display:none}
 
-  /* Pricing */
-  .pricing-wrap{margin-top:40px}
-  .pc-top{padding:28px 24px}
-  .pc-top .pnum{font-size:60px}
-  .pc-feats{padding:20px 24px}
-  .pc-feats li{font-size:14px}
-  .pc-action{padding:0 24px 24px}
+  /* ── Pricing ── */
+  .pricing-two-col{grid-template-columns:1fr !important;gap:14px !important}
+  .trial-badge span{font-size:11px}
 
-  /* FAQ */
-  .faq-wrap{margin-top:40px}
-  summary{font-size:15px}
-  details p{font-size:14px}
+  /* ── FAQ ── */
+  .faq-wrap{margin-top:32px}
+  summary{font-size:14px}
+  details p{font-size:13px}
+  details{padding:14px 0}
 
-  /* Footer */
-  footer{padding:28px 16px;font-size:12px}
+  /* ── Footer ── */
+  footer{padding:24px 16px;font-size:11px;gap:6px}
 }
 @media(max-width:380px){
-  h1{font-size:28px}
+  h1{font-size:26px}
   .nav-cta{display:none}
+  section{padding:48px 14px}
 }
 </style>
 </head>
@@ -545,7 +553,7 @@ footer a:hover{color:var(--ink)}
           <li style="padding:8px 0;font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g);font-weight:600;flex-shrink:0;">✓</span><strong>Change history timeline</strong></li>
         </ul>
         <div style="padding:0 26px 26px;">
-          <a href="https://buy.stripe.com/3cIdR84VG1Fo6vS5X8ebu01" style="display:block;text-align:center;background:var(--g);color:#fff;font-size:14px;font-weight:500;padding:14px;border-radius:999px;text-decoration:none;">Start free trial</a>
+          <a href="https://buy.stripe.com/3cIdR84VG1Fo6vS5X8ebu01" style="display:block;text-align:center;background:var(--g);color:#fff;font-size:14px;font-weight:500;padding:14px;border-radius:999px;text-decoration:none;">Get started</a>
         </div>
       </div>
 
