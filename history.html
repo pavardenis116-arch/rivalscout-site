@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RivalScout — Change History</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;background:#FAFAF8;color:#141414}
+
+[data-theme="dark"]{
+  --bg:#0F1117;--card:#1C1F2A;--line:#2E3240;
+  --ink:#F0F0F8;--ink2:#A0A8C0;--ink3:#606880;
+  --g:#4ADE80;--g-bg:rgba(74,222,128,.12);
+  --r:#F87171;--r-bg:rgba(248,113,113,.12);
+}
+[data-theme="light"]{
+  --bg:#FAFAF8;--card:#FFFFFF;--line:#E4E3DC;
+  --ink:#141414;--ink2:#505050;--ink3:#909090;
+  --g:#16653F;--g-bg:#EAF4EE;
+  --r:#B83232;--r-bg:#FAEAEA;
+}
+body{background:var(--bg);color:var(--ink)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line);padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px)}
+.logo{font-family:'Instrument Serif',serif;font-size:20px;color:var(--ink);text-decoration:none;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--g)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.back-link{font-size:13px;color:var(--ink2);text-decoration:none}
+.back-link:hover{color:var(--ink)}
+
+/* MAIN */
+.wrap{max-width:720px;margin:0 auto;padding:48px 24px}
+.page-title{font-family:'Instrument Serif',serif;font-size:36px;line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+.page-title em{font-style:italic;color:var(--g)}
+.page-sub{font-size:15px;color:var(--ink2);margin-bottom:40px}
+
+/* FILTER */
+.filter-row{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.filter-btn{font-size:12px;font-weight:500;padding:6px 14px;border-radius:999px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink2);transition:all .15s}
+.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+[data-theme="light"] .filter-btn.active{background:#16653F;border-color:#16653F}
+
+/* TIMELINE */
+.timeline{position:relative}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}
+
+.entry{padding:0 0 28px 24px;position:relative}
+.entry::before{content:'';position:absolute;left:-4px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--g);border:2px solid var(--bg)}
+
+.entry-date{font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.entry-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.entry-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.entry-avatar{width:28px;height:28px;border-radius:6px;background:var(--g-bg);color:var(--g);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.entry-name{font-size:14px;font-weight:500;color:var(--ink)}
+.entry-type{font-size:11px;color:var(--ink3);background:var(--bg);border:1px solid var(--line);padding:2px 8px;border-radius:4px;font-family:'SF Mono','Courier New',monospace}
+.entry-summary{font-size:14px;color:var(--ink2);line-height:1.65}
+.entry-changes{margin-top:10px}
+.change-line{font-size:12px;font-family:'SF Mono','Courier New',monospace;padding:5px 10px;border-radius:6px;margin-bottom:4px;line-height:1.4}
+.change-rm{background:var(--r-bg);color:var(--r)}
+.change-ad{background:var(--g-bg);color:var(--g)}
+.insight{margin-top:10px;padding:10px 13px;background:var(--g-bg);border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:13px;color:var(--ink2);line-height:1.55;font-style:italic}
+.entry-link{display:inline-block;margin-top:12px;font-size:12px;color:var(--g);text-decoration:none;font-weight:500}
+.entry-link:hover{text-decoration:underline}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:60px 20px}
+.empty h3{font-family:'Instrument Serif',serif;font-size:24px;color:var(--ink);margin-bottom:8px}
+.empty p{font-size:15px;color:var(--ink2)}
+
+/* LOADING */
+.loading{text-align:center;padding:60px;color:var(--ink3);font-size:14px}
+
+@media(max-width:600px){
+  .nav{padding:0 16px}
+  .wrap{padding:32px 16px}
+  .page-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="/">Rival<em>Scout</em></a>
+  <div class="nav-right">
+    <a class="back-link" href="/">← Back to site</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <h1 class="page-title">Change <em>history</em></h1>
+  <p class="page-sub">Every competitor move we've caught — newest first.</p>
+
+  <div class="filter-row" id="filters">
+    <button class="filter-btn active" onclick="filterBy('all', this)">All changes</button>
+  </div>
+
+  <div class="timeline" id="timeline">
+    <div class="loading">Loading your change history...</div>
+  </div>
+</div>
+
+<script>
+// Read history from the JSON files in the repo
+// Each customer's history is stored in history/{email_key}.json
+// This page loads the current user's history
+
+var allEntries = [];
+var currentFilter = 'all';
+
+// Try to load history data
+async function loadHistory() {
+  const timeline = document.getElementById('timeline');
+  
+  try {
+    // Get the email from URL param or localStorage
+    const params = new URLSearchParams(window.location.search);
+    const emailKey = params.get('customer') || localStorage.getItem('rs-customer-key');
+    
+    if (!emailKey) {
+      timeline.innerHTML = `
+        <div class="empty">
+          <h3>No history yet</h3>
+          <p>Your change history will appear here once we've been monitoring for a few days.</p>
+        </div>`;
+      return;
+    }
+
+    // Fetch from the repo's raw history file
+    const repoBase = 'https://raw.githubusercontent.com/pavardenis116-arch/pricewatch/main/history/';
+    const resp = await fetch(repoBase + emailKey + '.json');
+    
+    if (!resp.ok) {
+      throw new Error('History file not found');
+    }
+    
+    const entries = await resp.json();
+    allEntries = entries.reverse(); // newest first
+    
+    // Build competitor filters
+    buildFilters();
+    renderEntries(allEntries);
+    
+  } catch(e) {
+    // Show sample data if no real history
+    showSampleData();
+  }
+}
+
+function buildFilters() {
+  const competitors = [...new Set(allEntries.map(e => e.competitor))];
+  const filterRow = document.getElementById('filters');
+  competitors.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = c;
+    btn.onclick = function() { filterBy(c, this); };
+    filterRow.appendChild(btn);
+  });
+}
+
+function filterBy(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = type === 'all' ? allEntries : allEntries.filter(e => e.competitor === type);
+  renderEntries(filtered);
+}
+
+function renderEntries(entries) {
+  const timeline = document.getElementById('timeline');
+  
+  if (!entries.length) {
+    timeline.innerHTML = '<div class="empty"><h3>No changes yet</h3><p>Check back after your first week of monitoring.</p></div>';
+    return;
+  }
+
+  timeline.innerHTML = entries.map(entry => {
+    const lines = (entry.summary || '').split('\n').filter(l => l.trim());
+    const changes = lines.filter(l => !l.toLowerCase().includes('what this means'));
+    const insight = lines.find(l => l.toLowerCase().includes('what this means'));
+    const insightText = insight ? insight.replace(/what this means for you:?/gi, '').trim().replace(/^:/, '').trim() : '';
+
+    const changeHTML = changes.map(l => {
+      const clean = l.replace(/^[-•+\s]+/, '').trim();
+      const isAdd = l.trim().startsWith('+') || l.toLowerCase().includes('added') || l.toLowerCase().includes('new ');
+      return `<div class="change-line ${isAdd ? 'change-ad' : 'change-rm'}">${isAdd ? '+' : '−'} ${clean}</div>`;
+    }).join('');
+
+    const pageLabels = {pricing:'pricing page',features:'features page',messaging:'homepage',jobs:'careers page',reviews:'reviews'};
+    const label = pageLabels[entry.page_type] || entry.page_type;
+
+    return `
+    <div class="entry" data-competitor="${entry.competitor}">
+      <div class="entry-date">${formatDate(entry.date)}</div>
+      <div class="entry-card">
+        <div class="entry-header">
+          <div class="entry-avatar">${entry.competitor[0].toUpperCase()}</div>
+          <span class="entry-name">${entry.competitor}</span>
+          <span class="entry-type">${label}</span>
+        </div>
+        ${changeHTML ? `<div class="entry-changes">${changeHTML}</div>` : ''}
+        ${insightText ? `<div class="insight">${insightText}</div>` : ''}
+        ${entry.url ? `<a class="entry-link" href="${entry.url}" target="_blank">View live page →</a>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatDate(dateStr) {
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+  } catch(e) { return dateStr; }
+}
+
+function showSampleData() {
+  // Show what the page will look like with real data
+  allEntries = [
+    {
+      date: new Date().toISOString().split('T')[0],
+      competitor: 'RivalApp',
+      page_type: 'pricing',
+      summary: '- Pro plan: $29/mo → $39/mo (+34%)\n- New Teams tier: $99/mo (new)\n- Free trial: 14 days → 7 days\nWhat this means for you: They just priced out their budget customers. Those people are looking for alternatives right now.',
+      url: 'https://rivalapp.com/pricing'
+    },
+    {
+      date: new Date(Date.now() - 7*24*60*60*1000).toISOString().split('T')[0],
+      competitor: 'CompetitorB',
+      page_type: 'features',
+      summary: '- Added Slack integration (new)\n- Removed legacy CSV export\nWhat this means for you: They\'re moving toward team workflows. If your customers are solo founders, this is your differentiation.',
+      url: 'https://competitorb.com/features'
+    }
+  ];
+  buildFilters();
+  renderEntries(allEntries);
+  
+  // Add a note that this is sample data
+  const timeline = document.getElementById('timeline');
+  const note = document.createElement('div');
+  note.style.cssText = 'margin-bottom:24px;padding:12px 16px;background:var(--g-bg);border-radius:8px;font-size:13px;color:var(--g);';
+  note.textContent = '👋 This is a preview — your real history will appear here once monitoring begins.';
+  timeline.insertBefore(note, timeline.firstChild);
+}
+
+// Load theme preference
+const saved = localStorage.getItem('rs-theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+
+// Load history
+loadHistory();
+</script>
+</body>
+</html>
